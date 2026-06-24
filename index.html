@@ -1,115 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title> Alke Wallet </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alke Wallet</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="css/estilos.css">
 </head>
+<body>
 
-</body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="#">Alke Wallet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<!-- Este es el NAVBAR de la pagina HOME. -->
-
-<nav class="navbar navbar-expand-sm -md -lg -xl navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Alke Wallet</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Menu</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="login.html">Login</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<!-- Este es el HERO de la pagina HOME. -->
-<section class="hero bg-light py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0">
-                <h1 class="display-4 fw-bold text-primary">La forma más fácil de manejar tu dinero</h1>
-                <p class="lead text-muted">Paga, transfiere y ahorra desde tu celular o computadora sin filas ni papeleos.</p>
-                <a href="login.html" class="btn btn-primary btn-lg px-4 me-2">Iniciar Sesión</a>
-                <a href="#" class="btn btn-outline-secondary btn-lg px-4">Registrarse</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                </ul>
             </div>
-            <div class="col-12 col-md-6 text-center">
-                <div class="p-5 bg-secondary text-white rounded-3 shadow">
-                    [ Imagen / Mockup de la App ]
+        </div>
+    </nav>
+
+    <section class="hero bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0">
+                    <h1 class="display-4 font-weight-bold text-primary">La forma más fácil de manejar tu dinero</h1>
+                    <p class="lead text-muted">Paga, transfiere y ahorra desde tu celular o computadora sin filas ni papeleos.</p>
+                    <a href="login.html" class="btn btn-primary btn-lg px-4 mr-2 mb-2 mb-sm-0">Iniciar Sesión</a>
+                    <a href="#" class="btn btn-outline-secondary btn-lg px-4 mb-2 mb-sm-0">Registrarse</a>
+                </div>
+                <div class="col-12 col-md-6 text-center">
+                    <div class="p-5 bg-secondary text-white rounded shadow">
+                        [ Imagen / Mockup de la App ]
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-<!-- Sección de beneficios de la pagina HOME. -->
-<section class="beneficios py-5">
-    <div class="container text-center">
-        <h2 class="mb-5 fw-bold">¿Por qué elegir nuestra Billetera?</h2>
-        
-        <div class="row">
-            <div class="col-12 col-md-4 mb-4">
-                <div class="p-3">
-                    <div class="fs-1 text-primary mb-2">🔒</div>
-                    <h5>Seguridad Total</h5>
-                    <p class="text-muted">Tus datos y dinero están protegidos con encriptación de nivel bancario.</p>
+    <section class="beneficios py-5">
+        <div class="container text-center">
+            <h2 class="mb-5 font-weight-bold">¿Por qué elegir nuestra Billetera?</h2>
+            
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="p-3">
+                        <div class="display-4 text-primary mb-2">🔒</div>
+                        <h5 class="font-weight-bold">Seguridad Total</h5>
+                        <p class="text-muted">Tus datos y dinero están protegidos con encriptación de nivel bancario.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-4 mb-4">
-                <div class="p-3">
-                    <div class="fs-1 text-primary mb-2">⚡</div>
-                    <h5>Pagos al Instante</h5>
-                    <p class="text-muted">Envía y recibe dinero en segundos a cualquier contacto.</p>
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="p-3">
+                        <div class="display-4 text-primary mb-2">⚡</div>
+                        <h5 class="font-weight-bold">Pagos al Instante</h5>
+                        <p class="text-muted">Envía y recibe dinero en segundos a cualquier contacto.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-4 mb-4">
-                <div class="p-3">
-                    <div class="fs-1 text-primary mb-2">💸</div>
-                    <h5>Cero Comisiones</h5>
-                    <p class="text-muted">Mantener tu cuenta y transferir es 100% gratis.</p>
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="p-3">
+                        <div class="display-4 text-primary mb-2">💸</div>
+                        <h5 class="font-weight-bold">Cero Comisiones</h5>
+                        <p class="text-muted">Mantener tu cuenta y transferir es 100% gratis.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Seccion de descarga de la app de la pagina HOME. -->
-<section class="descarga bg-primary text-white py-5 text-center">
-    <div class="container">
-        <h2 class="fw-bold mb-3">Lleva tu billetera a todas partes</h2>
-        <p class="mb-4">Disponible para iOS y Android de forma gratuita.</p>
-        <button class="btn btn-dark btn-lg mx-2 my-2">🤖 Google Play</button>
-        <button class="btn btn-dark btn-lg mx-2 my-2">🍏 App Store</button>
-    </div>
-</section>
+    <section class="descarga bg-primary text-white py-5 text-center">
+        <div class="container">
+            <h2 class="font-weight-bold mb-3">Lleva tu billetera a todas partes</h2>
+            <p class="mb-4">Disponible para iOS y Android de forma gratuita.</p>
+            <button class="btn btn-dark btn-lg mx-2 my-2">🤖 Google Play</button>
+            <button class="btn btn-dark btn-lg mx-2 my-2">🍏 App Store</button>
+        </div>
+    </section>
 
-<!-- Footer de la pagina HOME. -->
-<footer class="bg-dark text-muted py-4 text-center">
-    <div class="container">
-        <p class="mb-0">&copy; 2026 Alke Wallet. Todos los derechos reservados.</p>
-    </div>
-</footer>
-
-
+    <footer class="bg-dark text-muted py-4 text-center">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Alke Wallet. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
-
 </body>
-
-
-
 </html>

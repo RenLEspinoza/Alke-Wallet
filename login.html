@@ -1,66 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Alke Wallet</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="css/estilos.css">
 </head>
-
-<!-- Tarjeta de ingreso del Login -->
 <body class="bg-light">
 
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        
         <div class="row w-100 justify-content-center">
             <div class="col-12 col-md-6 col-lg-4">
                 
-                <div class="card shadow p-4 rounded-3">
+                <div class="card shadow p-4 rounded">
                     
                     <div class="text-center mb-4">
-                        <h2 class="fw-bold text-primary">Alke Wallet</h2>
+                        <h2 class="font-weight-bold text-primary">Alke Wallet</h2>
                         <p class="text-muted">Ingresa a tu cuenta segura</p>
                     </div>
 
                     <form id="form-login" action="menu.html" method="GET">
                         
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo electrónico</label>
+                        <div class="form-group mb-3">
+                            <label for="email">Correo electrónico</label>
                             <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
+                        
+                        <div class="form-group mb-3">
+                            <label for="password">Contraseña</label>
                             <input type="password" class="form-control" id="password" placeholder="••••••••" required>
                         </div>
 
-                        <div class="d-flex justify-content-between mb-4">
-                            <div class="form-check">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check m-0">
                                 <input type="checkbox" class="form-check-input" id="remember">
                                 <label class="form-check-label small" for="remember">Recordarme</label>
                             </div>
-                            <a href="#" class="small text-decoration-none">¿Olvidaste tu clave?</a>
+                            <a href="#" class="small">¿Olvidaste tu clave?</a>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 id-btn-ingresar mb-3">
+                        <button type="submit" class="btn btn-primary btn-block id-btn-ingresar mb-3">
                             Ingresar de forma segura
                         </button>
 
                         <div class="text-center">
                             <p class="small mb-0 text-muted">
-                                ¿No tienes cuenta? <a href="#" class="text-decoration-none">Regístrate aquí</a>
+                                ¿No tienes cuenta? <a href="#">Regístrate aquí</a>
                             </p>
-                            <hr class="text-muted my-3">
-                            <a href="index.html" class="small text-secondary text-decoration-none">← Volver al inicio</a>
+                            <hr class="my-3">
+                            <a href="index.html" class="small text-secondary">← Volver al inicio</a>
                         </div>
 
                     </form>
-                    </div>
+                </div>
                 
             </div>
         </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
