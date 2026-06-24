@@ -28,12 +28,24 @@
                     <form id="form-transferencia" action="menu.html" method="GET" novalidate>
                         
                         <div class="mb-3">
-                            <label for="destinatario" class="form-label">Destinatario (Correo o N° de Cuenta)</label>
-                            <input type="text" class="form-control" id="destinatario" placeholder="ejemplo@correo.com o 123456" required>
-                            <div class="invalid-feedback">
-                                Por favor, ingresa un destinatario válido.
-                            </div>
-                        </div>
+    <label for="destinatario" class="form-label">Destinatario (Correo o N° de Cuenta)</label>
+    <input type="text" class="form-control" id="destinatario" list="lista-contactos" placeholder="ejemplo@correo.com o 123456">
+    
+    <datalist id="lista-contactos">
+        <option value="juan@alke.com">
+        <option value="maria@alke.com">
+    </datalist>
+</div>
+
+<div class="mb-4">
+    <label for="nombre-contacto" class="form-label">Nombre del contacto</label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="nombre-contacto" placeholder="Juan Pérez">
+        <button class="btn btn-outline-primary" type="button" id="btn-agregar-contacto">
+            💾 Guardar
+        </button>
+    </div>
+</div>
 
                         <div class="mb-3">
                             <label for="monto" class="form-label">Monto a enviar</label>
@@ -53,12 +65,6 @@
                             <label for="motivo" class="form-label">Motivo (Opcional)</label>
                             <input type="text" class="form-control" id="motivo" placeholder="Ej: Pago de almuerzo">
                         </div>
-
-                        <div class="mb-4">
-                            <label for="motivo" class="form-label">Nombre del contacto)</label>
-                            <input type="text" class="form-control" id="motivo" placeholder="Juan Peréz">
-                        </div>
-
 
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success btn-lg">
@@ -83,11 +89,11 @@
 
 
 
-<script>
-     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
-</script>
+
 </body>
 </html>

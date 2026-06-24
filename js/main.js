@@ -71,17 +71,26 @@ $(document).ready(function () {
             window.location.href = "menu.html";
         }
     });
-
-    // Evento: Agregar nuevo contacto
+    // ==========================================
+    // EVENTO: AGREGAR NUEVO CONTACTO
+    // ==========================================
     $('#btn-agregar-contacto').click(function () {
-        const nuevoContacto = $('#nombre-contacto').val();
+    // Capturamos el valor del input del contacto
+    const nuevoContacto = $('#nombre-contacto').val().trim();
 
-        if (nuevoContacto !== "") {
-            alert("Contacto '" + nuevoContacto + "' agregado con éxito a tu agenda.");
-            $('#nombre-contacto').val(''); // Limpiamos el input
-        } else {
-            alert("Por favor, escribe el nombre del contacto.");
-        }
+    // Validamos con un IF básico que no esté vacío
+    if (nuevoContacto !== "") {
+        
+        // Agregamos una nueva opción al datalist usando texto e interpolación básica
+        $('#lista-contactos').append('<option value="' + nuevoContacto + '">');
+        
+        // Avisamos al usuario y limpiamos el campo
+        alert("Contacto '" + nuevoContacto + "' agregado como sugerencia.");
+        $('#nombre-contacto').val(''); 
+        
+    } else {
+        alert("Por favor, escribe el nombre o correo del contacto antes de guardar.");
+    }
     });
 
 });
