@@ -13,16 +13,21 @@ Alke-Wallet/
 ├── assets/
 |
 ├── css/
-│   └── styles.css      # Estilos visuales globales de la aplicación
+│   └── styles.css              # Estilos visuales globales de la aplicación.
 │
 ├── js/
-│   ├── auth.js         # Lógica de autenticación (Login/Validaciones)
-│   └── navigation.js   # Control de redirecciones y sesiones
+│   └── main.js                 # Lógica de autenticación (Login/Validaciones).
+│  
 │
-├── index.html          # Punto de entrada principal (Enrutador)
-├── login.html          # Pantalla de inicio de sesión
-├── menu.html           # Pantalla del menú principal
-└── README.md           # Documentación del proyecto
+├── index.html                  # Punto de entrada principal (Enrutador)
+├── login.html                  # Pantalla de inicio de sesión.
+|
+├── menu.html                   # Pantalla del menú principal.
+├── deposit.html                # Pantalla realizar depositos.
+├── sendmoney.html              # Pantalla para realizar transferencias.
+├── transactions.html           # Pantalla para ver ultimos movimientos de la cuenta.
+|
+└── README.md                   # Documentación del proyecto
 
 ```
 
@@ -30,27 +35,78 @@ Alke-Wallet/
 
 El usuario interactúa con la aplicación siguiendo un camino lógico y controlado según su estado de autenticación:
 
-index.html (Acceso Principal): Funciona como el "enrutador" automático. Verifica si existe una sesión activa.
+* index.html (Acceso Principal): Pantalla de bienvenida al sitio, el usuario puede interactuar con el sitio en esta etapa sin necesidad de iniciar sesión.
 
-Si el usuario no está logueado -> Redirige a login.html.
+La barra de navegación dispone de un link a un menu, el cual cumple una funcion de modal en esta etapa, dando las opciones al usuario de iniciar sesión o registrarse
+para poder acceder a los beneficios de la aplicación.
 
-Si el usuario ya está logueado -> Redirige a menu.html.
+La barra de navegación tambien dispone de un boton para iniciar sesión directamente, el cual redirige al usuario a una pantalla de login.
 
-login.html (Autenticación): Contiene el formulario de ingreso. Al introducir credenciales válidas, guarda el estado de la sesión y redirige a menu.html.
+En la sección HERO, además de información, cuenta con un llamado a la acción que invita al usuario a iniciar sesión o registrarse.
 
-menu.html (Panel Principal): Es el centro de la aplicación. 
+* login.html (Autenticación): Contiene el formulario de ingreso. Al introducir credenciales válidas, guarda el estado de la sesión y redirige a menu.html.
+
+* menu.html (Panel Principal): Es el centro de la aplicación para usuarios registrados.
+    El usuario puede elegir entre 4 acciones.
+    - Realizar transferencias: El Usuario es redirigido a la pantalla de transferencias "sendmoney.html".
+    - Depositar fondos: El usuario es redirigido a la pantalla para realizar depositos "deposit.html".
+    - Ver ultimos movimientos: El usuario es redirigido a la pantalla que muestra sus ultimos movimientos "transactions.html".
+    - Cerrar sesión: El usuario puede utilizar el boton de la barra de navegación para cerrar su sesión, siendo redirigido al sitio principal "index.html".
+
+* sendmoney.html: 
+    -El usuario puede interactuar con el formulario para realizar transferencias.
+    -Volver al menú de usuario "menu.html".
+    -Cerrar sesión y ser redirigido al sitio principal "index.html".
+
+deposit.html: El usuario puede interactuar con el formulario para realizar depositos, volver al menú o cerrar sesión y ser redirigido al sitio principal.
+
+transactions.html: El usuario puede visualizar su información de ultimos movimientos, volver al menú o cerrar sesión y ser redirigido al sitio principal.
 
 
 
 ## 📊 3. Diagrama Visual
 
-graph TD
-    index.html -->|¿Sesión activa? NO| login.html
-    index.html -->|¿Sesión activa? SÍ| menu.html
-    login.html -->|Login Exitoso| menu.html
-    menu.html -->|Cerrar Sesión| login.html
+```text
+                                   
+       [ ZONA PÚBLICA ]
+      +----------------+
+|-->  |   index.html   | <======================================+
+|     +----------------+                                        |
+|        |            |                                         |
+|     (Modal)      (Boton)                                      |
+|        |            |                                         |
+|        v            |                                         |
+|<--[Incentivo]       |                                         | 
+        |             v                                         |
+        |        +------------+                                 |
+        ----->   | login.html |                                 |
+                 +------------+                                 |
+                       |                                        |
+                (Login Exitoso)                                 |
+                       |                                        |
+                       v                                        |
+               +---------------+                                |
+               |   menu.html   | [ ZONA PRIVADA ]               |
+               +---------------+                                |
+                 /     |     \                                  |
+                /      |      \                                 |
+               v       v       v                                |
+  +---------------+ +--------------+ +-------------------+      |
+  | sendmoney.html| | deposit.html | | transactions.html |      |
+  +---------------+ +--------------+ +-------------------+      |
+   |             |   |            |   |                 |       |
+   | (Volver)    |   | (Volver)   |   | (Volver)        |       |
+   +------+------+   +-----+------+   +--------+--------+       |
+          |                |                   |                |
+          +----------------+-------------------+                |
+          |                                                     |
+          v                                                     |
+  (Regresa al Panel)                                            |
+                                                                |
+  (Cerrar Sesión desde cualquier pantalla privada)              |
+   +------------------------------------------------------------+
 
-
+---
 
 ## 🛠️ 4. Tecnologías Utilizadas
 
