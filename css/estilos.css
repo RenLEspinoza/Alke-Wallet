@@ -1,0 +1,27 @@
+/* 1. Nos aseguramos de que el HTML y el Body ocupen toda la altura disponible */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* 2. Convertimos el body en un contenedor Flexbox vertical */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. El truco mágico: obligamos al contenido principal a expandirse */
+.contenido-principal {
+    flex: 1; 
+    /* Esto hace que 'main' tome todo el espacio vacío restante, 
+       empujando al footer inevitablemente al fondo. */
+}
+
+/* 4. Estilos opcionales para tu footer */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
