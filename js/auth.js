@@ -9,16 +9,16 @@ const btnLogout = document.getElementById('btn-logout');
 // Si el boton de cerrar sesión (logout) hace click:
 if (btnLogout) {
     btnLogout.addEventListener('click', () => {
-        // Borramos los datos del localStorage
+        // Borramos los datos especificos del localStorage
+        // Eliminamos los datos especificos para no tocar el saldo de la cuenta ni los ingresos, ya que esos datos son persistentes y no dependen de la sesión del usuario.
         localStorage.removeItem('usuarioNombre');
         localStorage.removeItem('usuarioEmail');
         localStorage.removeItem('usuarioPassword');
         
-        // ( Si quisieramos limpiar todo el casillero de una sola vez: localStorage.clear(); ).
 
         // Generamos una alerta que indique que la sesión se cerro correctamente.
         alert('Sesión cerrada correctamente.');
-        // Y redirigimos al login.
-        // window.location.href = 'login.html';
+        // Y redirigimos al menú.
+        window.location.href = 'menu.html';
     });
 }

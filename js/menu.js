@@ -1,3 +1,7 @@
+//
+// Incorporar nombre del usuario en la visualización de datos del menú.
+//
+
 // Escuchamos cuando todo el HTML de la página de menú esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -11,35 +15,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nombreGuardado) {
         // Reemplazamos el texto "Invitado" por el nombre real del usuario
         contenedorNombre.textContent = nombreGuardado;
-    } else {
-        // Opcional: Si alguien intenta entrar al menú sin registrarse, 
-        // puedes dejar el texto "Invitado" o redirigirlo al login por seguridad
-        contenedorNombre.textContent = "Usuario";
     }
 });
 
+//_________________________________________________________________________________
+//
+// Actualizar el saldo disponible en el menú con los datos del localStorage
+//
 
-//__________________________________________________________________________________________
+$(document).ready(function () {
+    // 1. Definir valores iniciales por defecto si no existen en localStorage
+    if (!localStorage.getItem('saldo')) {
+        localStorage.setItem('saldo', 125600);
+    }
+    if (!localStorage.getItem('ingresos')) {
+        localStorage.setItem('ingresos', 45000);
+    }
 
-// Borrar datos del "localstorage" al hacer click en el boton de cerrar sesión.
-//__________________________________________________________________________________________
+    // 2. Cargar y mostrar los valores actuales en la interfaz
+    actualizarPantallaMenu();
 
-// Buscamos el botón de cerrar sesión.
-const btnLogout = document.getElementById('btn-logout');
+    function actualizarPantallaMenu() {
+        // Obtener los valores numéricos convertidos desde localStorage
+        let saldoActual = parseFloat(localStorage.getItem('saldo'));
+        let ingresosActuales = parseFloat(localStorage.getItem('ingresos'));
 
-// Si el boton de cerrar sesión (logout) hace click:
-if (btnLogout) {
-    btnLogout.addEventListener('click', () => {
-        // Borramos los datos del localStorage
-        localStorage.removeItem('usuarioNombre');
-        localStorage.removeItem('usuarioEmail');
-        localStorage.removeItem('usuarioPassword');
-        
-        // ( Si quisieramos limpiar todo el casillero de una sola vez: localStorage.clear(); ).
-
-        // Generamos una alerta que indique que la sesión se cerro correctamente.
-        alert('Sesión cerrada correctamente.');
-        // Y redirigimos al login.
-        window.location.href = 'login.html';
-    });
-}
+        // Formatear a moneda local y pintar en el HTML
+        $('#saldo-disponible').text('$' + saldoActual.toLocaleString('es-CL'));
+        $('#ingresos-mes').text('+$' + ingresosActuales.toLocaleString('es-CL'));
+    }
+});
