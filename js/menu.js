@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    
+
     // __________________________________________
 
     // 1. Configuración del usuario.
@@ -54,4 +54,24 @@ $(document).ready(function () {
             actualizarPantallaMenu();
         }
     });
+});
+
+$(document).ready(function () {
+    // 1. Buscamos el historial de movimientos que ya creamos en las otras pantallas
+    let historial = JSON.parse(localStorage.getItem('historial_movimientos')) || [];
+
+    // 2. Creamos una variable para acumular la suma de los egresos
+    let sumaEgresos = 0;
+
+    // 3. Recorremos la lista de movimientos uno por uno
+    historial.forEach(function (movimiento) {
+        // Si el tipo es 'Envío' o es 'Retiro', significa que es un egreso (gasto)
+        if (movimiento.tipo === 'Envío' || movimiento.tipo === 'Retiro') {
+            // Sumamos el valor numérico del monto
+            sumaEgresos = sumaEgresos + parseFloat(movimiento.monto);
+        }
+    });
+
+    // 4. Con jQuery inyectamos el total calculado en la tarjeta roja formateado como moneda
+    $('#egresos-totales').text(`-$${sumaEgresos.toLocaleString('es-CL')}`);
 });
