@@ -45,6 +45,21 @@ $(document).ready(function () {
         let nuevoSaldo = saldoActual + monto; 
         let nuevosIngresos = ingresosActuales + monto; 
 
+        // --- GUARDAR DEPÓSITO EN EL HISTORIAL ---
+        let historial = JSON.parse(localStorage.getItem('historial_movimientos')) || [];
+        historial.push({
+        fecha: new Date().toLocaleDateString('es-CL'), // Fecha de hoy (DD/MM/AAAA)
+        tipo: 'Depósito',
+        claseBadge: 'badge-success', // Color verde de Bootstrap
+        detalle: 'Depósito cuenta propia',
+        signo: '+',
+        claseMonto: 'text-success',
+         monto: monto // El monto que ingresó el usuario
+        
+        });
+localStorage.setItem('historial_movimientos', JSON.stringify(historial));
+
+
         // Guardamos
         localStorage.setItem(llaveSaldo, nuevoSaldo);
         localStorage.setItem(llaveIngresos, nuevosIngresos);
@@ -79,6 +94,19 @@ $(document).ready(function () {
         // Restamos los fondos
         let nuevoSaldo = saldoActual - monto; 
 
+        // --- GUARDAR RETIRO EN EL HISTORIAL ---
+        let historial = JSON.parse(localStorage.getItem('historial_movimientos')) || [];
+        historial.push({
+        fecha: new Date().toLocaleDateString('es-CL'),
+        tipo: 'Retiro',
+        claseBadge: 'badge-danger', // Color rojo de Bootstrap
+        detalle: 'Retiro de fondos',
+        signo: '-',
+        claseMonto: 'text-danger',
+        monto: monto
+        });
+        localStorage.setItem('historial_movimientos', JSON.stringify(historial));
+
         // Guardamos (Nota: Al retirar NO alteramos los ingresos del mes)
         localStorage.setItem(llaveSaldo, nuevoSaldo);
 
@@ -87,6 +115,8 @@ $(document).ready(function () {
 
         mostrarAlerta(`¡Retiro exitoso de $${monto.toLocaleString('es-CL')} completado con éxito!`, 'alert-success');
         $('#montoDeposito').val('');
+
+
     });
 
     // Actualizar saldo visual //

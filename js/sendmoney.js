@@ -17,7 +17,7 @@ $(document).ready(function () {
         // Buscamos el saldo en localStorage.
         let saldoActual = parseFloat(localStorage.getItem(llaveSaldo));
         
-        // Lo pintamos en el HTML con formato de moneda chilena.
+        // Lo agregamos en el HTML con formato de moneda chilena.
         $('#saldo-disponible').text(`$${saldoActual.toLocaleString('es-CL')}`);
     }
 
@@ -26,7 +26,7 @@ $(document).ready(function () {
 
     // ___________________________________________________________
 
-    // CARGAR O INICIALIZAR CONTACTOS (LOCALSTORAGE + HTML).
+    // Cargar o inicializar contactos (localstorage + html).
     // ___________________________________________________________
     let contactosGuardados = localStorage.getItem(llaveContactos);
     let listaContactos = [];
@@ -61,10 +61,10 @@ $(document).ready(function () {
     // Actualiza lista de contactos de forma interna y en la lista de la pantalla.
     // _____________________________________________________________________________
     function actualizarInterfazContactos() {
-        // Limpiamos el contenedor HTML de la derecha para evitar duplicados
+        // Limpiamos el contenedor HTML de la derecha para evitar duplicados.
         $('#listaContactos').empty();
 
-        // Volvemos a pintar cada contacto en la lista lateral
+        // Volvemos a pintar cada contacto en la lista lateral.
         listaContactos.forEach(function(contacto) {
             $('#listaContactos').append(`
                 <div class="list-group-item d-flex justify-content-between align-items-center">
@@ -79,12 +79,12 @@ $(document).ready(function () {
         // Extrae solo los nombres para el autocompletar.
         let nombresSugerencias = listaContactos.map(c => c.nombre);
 
-        // Inicializamos o actualizamos el Autocomplete de jQuery UI
+        // Inicializamos o actualizamos el Autocomplete de jQuery UI.
         if ($("#buscarContacto").data("ui-autocomplete")) {
-            // Si ya existe, refrescamos sus opciones de origen
+            // Si ya existe, refrescamos sus opciones de origen.
             $("#buscarContacto").autocomplete("option", "source", nombresSugerencias);
         } else {
-            // Si es la primera vez que carga, lo creamos
+            // Si es la primera vez que carga, lo creamos.
             $("#buscarContacto").autocomplete({
                 source: nombresSugerencias,
                 minLength: 1 
@@ -92,7 +92,7 @@ $(document).ready(function () {
         }
     }
 
-    // Ejecución inicial al abrir la pantalla
+    // Ejecución inicial al abrir la pantalla.
     actualizarInterfazContactos();
 
 
@@ -128,12 +128,35 @@ $(document).ready(function () {
 
         let nuevoSaldo = saldoActual - monto;
         localStorage.setItem(llaveSaldo, nuevoSaldo);
-
+        
         mostrarAlerta(`¡Transferencia de $${monto.toLocaleString('es-CL')} a ${contactoEncontrado.nombre} realizada con éxito!`, 'alert-success');
         
-        actualizarSaldoVisual(); 
+        // Guardar transferencia en el historial de movimientos.
 
-        mostrarAlerta(`¡Transferencia de $${monto.toLocaleString('es-CL')} a ${contactoEncontrado.nombre} realizada con éxito!`, 'alert-success');
+        // 1. Intentamos obtener el contacto seleccionado
+// 1. Capturamos directamente lo que el usuario escribió en la caja de texto
+let contactoSeleccionado = $('#buscarContacto').val().trim();
+
+// 2. Si la caja estaba vacía, le ponemos un texto por defecto
+if (!contactoSeleccionado) {
+    contactoSeleccionado = "Destinatario no especificado";
+}
+
+// 3. --- GUARDAR TRANSFERENCIA EN EL HISTORIAL ---
+let historial = JSON.parse(localStorage.getItem('historial_movimientos')) || [];
+historial.push({
+    fecha: new Date().toLocaleDateString('es-CL'),
+    tipo: 'Envío',
+    claseBadge: 'badge-danger',
+    detalle: 'A: ' + contactoSeleccionado, // Ahora sí guardará el texto escrito a mano
+    signo: '-',
+    claseMonto: 'text-danger',
+    monto: monto
+});
+localStorage.setItem('historial_movimientos', JSON.stringify(historial));
+
+
+        actualizarSaldoVisual(); 
         
         $('#montoEnviar').val('');
         $('#buscarContacto').val('');
@@ -181,7 +204,7 @@ $(document).ready(function () {
         mostrarAlerta(`¡Contacto "${nuevoNombre}" agregado exitosamente!`, 'alert-success');
     });
 
-    // Función auxiliar de alertas
+    // Función auxiliar de alertas.
     function mostrarAlerta(mensaje, claseBootstrap) {
         let $alerta = $('#mensaje-alerta'); 
         clearTimeout(alertaTimeout);
