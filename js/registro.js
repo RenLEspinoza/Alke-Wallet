@@ -28,18 +28,22 @@ evento.preventDefault();
         passwordInput.focus(); 
         
     } else {
-    // 1. Capturamos también el nombre que ingresó el usuario
+        // 1. Capturamos los datos
         const nombreIngresado = document.getElementById('nombre-registro').value;
         const correoIngresado = document.getElementById('email-registro').value;
 
-    // 2. Guardamos los datos en el localStorage (se guardan como texto con una "llave" y un "valor")
-        localStorage.setItem('usuarioNombre', nombreIngresado);
+        // 2. Guardamos usando el correo como PREFIJO dinámico (Así no se sobreescriben entre usuarios)
+        localStorage.setItem(correoIngresado + '_nombre', nombreIngresado);
+        localStorage.setItem(correoIngresado + '_password', password);
+        
+        // También guardamos estos para que tu Login actual (estático) los pueda leer si no quieres cambiarlo completo
         localStorage.setItem('usuarioEmail', correoIngresado);
-        localStorage.setItem('usuarioPassword', password); // 'password' viene de tu variable anterior
+        localStorage.setItem('usuarioPassword', password);
+        localStorage.setItem('usuarioNombre', nombreIngresado);
 
         alert('¡Registro exitoso, redireccionando!');
-        window.location.href = 'login.html'; // Redirigimos al Login
-}
+        window.location.href = 'login.html'; 
+    }
 });
 
 

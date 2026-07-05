@@ -1,47 +1,57 @@
-//
-// Incorporar nombre del usuario en la visualización de datos del menú.
-//
-
-// Escuchamos cuando todo el HTML de la página de menú esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Vamos al localStorage a buscar el nombre que guardamos en el registro
-    const nombreGuardado = localStorage.getItem('usuarioNombre');
-
-    // 2. Buscamos el elemento HTML donde queremos mostrarlo
-    const contenedorNombre = document.getElementById('nombre-usuario');
-
-    // 3. Verificamos si efectivamente hay un nombre guardado
-    if (nombreGuardado) {
-        // Reemplazamos el texto "Invitado" por el nombre real del usuario
-        contenedorNombre.textContent = nombreGuardado;
-    }
-});
-
-//_________________________________________________________________________________
-//
-// Actualizar el saldo disponible en el menú con los datos del localStorage
-//
-
 $(document).ready(function () {
-    // 1. Definir valores iniciales por defecto si no existen en localStorage
-    if (!localStorage.getItem('saldo')) {
-        localStorage.setItem('saldo', 125600);
-    }
-    if (!localStorage.getItem('ingresos')) {
-        localStorage.setItem('ingresos', 45000);
+    // ==========================================
+    // 1. CONFIGURACIÓN INICIAL DEL USUARIO
+    // ==========================================
+    const correoUsuario = localStorage.getItem('usuarioActual'); 
+
+    // Seguridad: Si no hay sesión iniciada, redirige de inmediato
+    if (!correoUsuario) {
+        window.location.href = 'login.html';
+        return; // Detiene la ejecución del código
     }
 
-    // 2. Cargar y mostrar los valores actuales en la interfaz
-    actualizarPantallaMenu();
+    // Estructuramos las llaves únicas para este usuario
+    const llaveSaldo = correoUsuario + '_saldo';
+    const llaveIngresos = correoUsuario + '_ingresos';
 
+    // ==========================================
+    // 2. VALORES INICIALES (Si es usuario nuevo)
+    // ==========================================
+    if (!localStorage.getItem(llaveSaldo)) {
+        localStorage.setItem(llaveSaldo, 1250000); // Saldo inicial unificado ($1.250.000)
+    }
+    if (!localStorage.getItem(llaveIngresos)) {
+        localStorage.setItem(llaveIngresos, 250000); 
+    }
+
+    // ==========================================
+    // 3. FUNCIÓN UNIFICADA PARA PINTAR LA INTERFAZ
+    // ==========================================
     function actualizarPantallaMenu() {
-        // Obtener los valores numéricos convertidos desde localStorage
-        let saldoActual = parseFloat(localStorage.getItem('saldo'));
-        let ingresosActuales = parseFloat(localStorage.getItem('ingresos'));
+        // A. Cargar Nombre Real
+        const nombreReal = localStorage.getItem(correoUsuario + '_nombre') || 'Usuario';
+        $('#nombre-usuario').text(nombreReal);
 
-        // Formatear a moneda local y pintar en el HTML
+        // B. Cargar Saldos
+        let saldoActual = parseFloat(localStorage.getItem(llaveSaldo));
+        let ingresosActuales = parseFloat(localStorage.getItem(llaveIngresos));
+
+        // C. Pintar en el HTML (Asegúrate de que en menu.html el ID sea #saldo-menu o #saldo-disponible)
         $('#saldo-disponible').text('$' + saldoActual.toLocaleString('es-CL'));
         $('#ingresos-mes').text('+$' + ingresosActuales.toLocaleString('es-CL'));
     }
+
+    // Ejecutamos en el milisegundo 0 para evitar parpadeos
+    actualizarPantallaMenu();
+
+    // ==========================================
+    // 4. ESCUCHAR TRANSFERENCIAS DESDE OTRAS PÁGINAS
+    // ==========================================
+    // Si el usuario transfiere en "sendmoney.html" y vuelve al menú, 
+    // este evento actualiza el saldo de fondo automáticamente.
+    window.addEventListener('storage', function (e) {
+        if (e.key === llaveSaldo) {
+            actualizarPantallaMenu();
+        }
+    });
 });
