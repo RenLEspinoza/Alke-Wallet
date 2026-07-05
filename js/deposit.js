@@ -1,61 +1,113 @@
-//_____________________________________________________________________
-
-// Realizar deposito y actualizar datos de saldo e ingresos.
-//_____________________________________________________________________
-
 $(document).ready(function () {
     let alertaTimeout; // Variable para almacenar el temporizador de la alerta.
 
+    // ______________________________________________________________
+
+    // 0. Configuración del usuario
+    // ______________________________________________________________
+    const correoUsuario = localStorage.getItem('usuarioActual'); 
+    const llaveSaldo = correoUsuario + '_saldo';
+    const llaveIngresos = correoUsuario + '_ingresos';
+
+    // _______________________________________________________________
+
+    // Función mostrar saldo actualizado.
+    // _______________________________________________________________
+    function actualizarSaldoVisual() {
+        // Buscamos el saldo en localStorage.
+        let saldoActual = parseFloat(localStorage.getItem(llaveSaldo));
+
+        // Lo agregamos en el HTML con formato de moneda chilena.
+        $('#saldo-disponible').text(`$${saldoActual.toLocaleString('es-CL')}`);
+    }
+
+    // Ejecutamos al cargar la pantalla para que no aparezca el saldo en $0.
+    actualizarSaldoVisual();
+
+    // _______________________________________________________________
+
+    // Evento 1: Simular deposito o retiro.
+    // _______________________________________________________________
     $('#btn-depositar').click(function () {
-        // 1. Declarar y obtener los valores del formulario.
-        let medioPago = $('#medioPago').val(); 
         let montoInput = $('#montoDeposito').val(); 
         let monto = parseFloat(montoInput); 
         
-        // 2. Validaciones básicas de entrada.
-        if (!medioPago) {
-            mostrarAlerta('Por favor, selecciona un medio de pago.', 'alert-danger');
-            return;
-        }
-
         if (isNaN(monto) || monto < 1000) {
             mostrarAlerta('El monto mínimo de depósito es $1.000.', 'alert-danger');
             return;
         }
 
-        // 3. Obtener valores actuales de localStorage o los valores por defecto.
-        let saldoActual = parseFloat(localStorage.getItem('saldo')) || 125600;
-        let ingresosActuales = parseFloat(localStorage.getItem('ingresos')) || 45000;
+        // Leemos del localStorage usando las llaves del usuario
+        let saldoActual = parseFloat(localStorage.getItem(llaveSaldo)) || 1250000;
+        let ingresosActuales = parseFloat(localStorage.getItem(llaveIngresos)) || 250000;
 
-        // 4. Realizar la suma matemática.
+        // Cálculos correspondientes
         let nuevoSaldo = saldoActual + monto; 
         let nuevosIngresos = ingresosActuales + monto; 
 
-        // 5. Guardar los nuevos estados en localStorage.
-        localStorage.setItem('saldo', nuevoSaldo);
-        localStorage.setItem('ingresos', nuevosIngresos);
+        // Guardamos
+        localStorage.setItem(llaveSaldo, nuevoSaldo);
+        localStorage.setItem(llaveIngresos, nuevosIngresos);
 
-        // 6. Mostrar feedback de éxito al usuario y limpiar el input.
-        mostrarAlerta(`¡Depósito exitoso de $${monto.toLocaleString('es-CL')} mediante ${medioPago}!`, 'alert-success');
+        // Actualizamos visualmente el saldo de inmediato sin recargar la página
+        actualizarSaldoVisual();
+
+        mostrarAlerta(`¡Depósito exitoso de $${monto.toLocaleString('es-CL')} realizado con éxito!`, 'alert-success');
         $('#montoDeposito').val('');
-        $('#medioPago').val('');
     });
 
-    // Función auxiliar para mostrar alertas con temporizador
+    // ==========================================
+    // EVENTO 2: SIMULAR RETIRO
+    // ==========================================
+    $('#btn-retirar').click(function () {
+        let montoInput = $('#montoDeposito').val(); 
+        let monto = parseFloat(montoInput); 
+        
+        if (isNaN(monto) || monto < 1000) {
+            mostrarAlerta('El monto mínimo de retiro es $1.000.', 'alert-danger');
+            return;
+        }
+
+        let saldoActual = parseFloat(localStorage.getItem(llaveSaldo)) || 1250000;
+
+        // Validación crítica: No se puede retirar más de lo que se tiene
+        if (monto > saldoActual) {
+            mostrarAlerta('Fondos insuficientes para realizar este retiro.', 'alert-danger');
+            return;
+        }
+
+        // Restamos los fondos
+        let nuevoSaldo = saldoActual - monto; 
+
+        // Guardamos (Nota: Al retirar NO alteramos los ingresos del mes)
+        localStorage.setItem(llaveSaldo, nuevoSaldo);
+
+        // Actualizamos visualmente la interfaz de inmediato
+        actualizarSaldoVisual();
+
+        mostrarAlerta(`¡Retiro exitoso de $${monto.toLocaleString('es-CL')} completado con éxito!`, 'alert-success');
+        $('#montoDeposito').val('');
+    });
+
+    // Actualizar saldo visual //
+    // Escucha eventos que modifiquen el saldo en otras pantallas.
+    window.addEventListener('storage', function (e) {
+        if (e.key === llaveSaldo) {
+            actualizarSaldoVisual();
+        }
+    });
+
+    // Función auxiliar para mostrar alertas con temporizador.
     function mostrarAlerta(mensaje, claseBootstrap) {
         let $alerta = $('#mensaje-alerta'); 
-        
-        // Limpiamos el temporizador previo si ya existe
         clearTimeout(alertaTimeout);
 
-        // Removemos d-none y luego manipulamos con jQuery
         $alerta.removeClass('d-none alert-danger alert-success')
                .addClass(claseBootstrap) 
                .text(mensaje)
-               .stop(true, true) // Detiene animaciones previas a medias en caso de que el usuario haga clic rápido varias veces.
+               .stop(true, true)
                .show(); 
 
-        // Establece el temporizador para ocultar la alerta después de 5 segundos.
         alertaTimeout = setTimeout(function() {
             $alerta.fadeOut(function() {
                 $(this).addClass('d-none'); 

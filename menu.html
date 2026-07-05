@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"><title>Menu - Alke Wallet</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link class="rtl" rel="stylesheet" href="css/estilos.css">
+    <script>
+        // Prevenir acceso manual sin login a pantallas criticas.
+        if (!localStorage.getItem('usuarioActual')) {
+            window.location.replace('index.html'); 
+        }
+    </script>
 </head>
 <body>
 
@@ -21,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto text-lg-right">
                         <li class="mt-2 mt-lg-0">
-                            <a id= btn-logout class="btn btn-outline-light px-4 w-100 d-lg-inline-block" href="index.html">Cerrar sesión</a>
+                            <a id= "btn-logout" class="btn btn-outline-light px-4 w-100 d-lg-inline-block" href="index.html">Cerrar sesión</a>
                         </li>
                     </ul>
 
@@ -98,7 +104,7 @@
           
           <div class="col-sm-6 col-md-4 mb-2">
             <a href="deposit.html" class="btn btn-outline-primary btn-block py-3 font-weight-bold">
-              Depositar Fondos
+              Depositar o retirar fondos
             </a>
           </div>
 

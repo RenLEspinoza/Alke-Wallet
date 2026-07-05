@@ -1,24 +1,29 @@
 //__________________________________________________________________________________________
-
 // Borrar datos del "localstorage" al hacer click en el boton de cerrar sesión.
 //__________________________________________________________________________________________
 
 // Buscamos el botón de cerrar sesión.
 const btnLogout = document.getElementById('btn-logout');
 
-// Si el boton de cerrar sesión (logout) hace click:
 if (btnLogout) {
-    btnLogout.addEventListener('click', () => {
-        // Borramos los datos especificos del localStorage
-        // Eliminamos los datos especificos para no tocar el saldo de la cuenta ni los ingresos, ya que esos datos son persistentes y no dependen de la sesión del usuario.
+    btnLogout.addEventListener('click', (e) => {
+        // 1. Evitamos que el enlace HTML actúe antes de que JS termine de borrar
+        e.preventDefault();
+
+        // 2. ¡LA CLAVE! Eliminamos la sesión activa borrando el usuario actual
+        localStorage.removeItem('usuarioActual');
+        
+        // Opcional: Si estabas guardando estas también, las borramos por limpieza
         localStorage.removeItem('usuarioNombre');
         localStorage.removeItem('usuarioEmail');
         localStorage.removeItem('usuarioPassword');
-        
 
-        // Generamos una alerta que indique que la sesión se cerro correctamente.
+        // Nota: El saldo e ingresos no se tocan (se quedan guardados con su correo + '_saldo')
+
+        // 3. Informamos al usuario
         alert('Sesión cerrada correctamente.');
-        // Y redirigimos al menú.
-        window.location.href = 'menu.html';
+
+        // 4. ¡CORRECCIÓN! Sacamos al usuario hacia la página de inicio/login
+        window.location.href = 'index.html'; 
     });
 }

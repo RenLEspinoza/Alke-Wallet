@@ -1,40 +1,43 @@
 $(document).ready(function () {
-    let alertaTimeout;
+    let alertaTimeout; // Variable para almacenar el temporizador de la alerta.
 
-    // ==========================================
-    // 0. CONFIGURACIÓN INICIAL DEL USUARIO
-    // ==========================================
+    // ___________________________________________________________
+
+    // Configuración del usuario.
+    // ___________________________________________________________
     let usuarioActual = localStorage.getItem('usuarioActual'); 
     let llaveContactos = usuarioActual + '_lista_contactos';
     let llaveSaldo = usuarioActual + '_saldo';
 
-    // ==========================================
-    // FUNCIÓN NUEVA: MOSTRAR SALDO ACTUALIZADO
-    // ==========================================
+    // ___________________________________________________________
+
+    // Función mostrar saldo actualizado.
+    // ___________________________________________________________
     function actualizarSaldoVisual() {
         // Buscamos el saldo en localStorage.
         let saldoActual = parseFloat(localStorage.getItem(llaveSaldo));
         
-        // Lo pintamos en el HTML con formato de moneda chilena
+        // Lo pintamos en el HTML con formato de moneda chilena.
         $('#saldo-disponible').text(`$${saldoActual.toLocaleString('es-CL')}`);
     }
 
-    // Ejecutamos al cargar la pantalla para que no aparezca en $0
+    // Ejecutamos al cargar la pantalla para que no aparezca el saldo en $0.
     actualizarSaldoVisual();
 
-    // ==========================================
-    // 1. CARGAR O INICIALIZAR CONTACTOS (LOCALSTORAGE + HTML)
-    // ==========================================
+    // ___________________________________________________________
+
+    // CARGAR O INICIALIZAR CONTACTOS (LOCALSTORAGE + HTML).
+    // ___________________________________________________________
     let contactosGuardados = localStorage.getItem(llaveContactos);
     let listaContactos = [];
 
     if (contactosGuardados) {
         listaContactos = JSON.parse(contactosGuardados);
     } else {
-        // SOLUCIÓN: Si no hay nada guardado, leemos los contactos que ya pusiste en el HTML
+        // Si no hay nada guardado, lee los contactos que hay en el HTML.
         $('#listaContactos .list-group-item').each(function() {
             let nombre = $(this).find('h6').text().trim();
-            // Extraemos el número de cuenta quitando el texto "N° Cuenta: "
+            // Extrae el número de cuenta quitando el texto "N° Cuenta: ".
             let cuentaTexto = $(this).find('.badge').text().replace('N° Cuenta: ', '').trim();
             
             if (nombre) {
@@ -47,15 +50,16 @@ $(document).ready(function () {
             }
         });
         
-        // Si encontramos contactos en el HTML, los dejamos guardados en el LocalStorage de una vez
+        // Si hay contactos por defecto en el html, los guarda.
         if (listaContactos.length > 0) {
             localStorage.setItem(llaveContactos, JSON.stringify(listaContactos));
         }
     }
 
-    // ==========================================
-    // 2. RENDERIZAR LISTA VISUAL Y SUGERENCIAS
-    // ==========================================
+    // _____________________________________________________________________________
+
+    // Actualiza lista de contactos de forma interna y en la lista de la pantalla.
+    // _____________________________________________________________________________
     function actualizarInterfazContactos() {
         // Limpiamos el contenedor HTML de la derecha para evitar duplicados
         $('#listaContactos').empty();
@@ -72,7 +76,7 @@ $(document).ready(function () {
             `);
         });
 
-        // EXTRAEMOS SOLO LOS NOMBRES PARA EL AUTOCOMPLETE
+        // Extrae solo los nombres para el autocompletar.
         let nombresSugerencias = listaContactos.map(c => c.nombre);
 
         // Inicializamos o actualizamos el Autocomplete de jQuery UI
@@ -92,9 +96,10 @@ $(document).ready(function () {
     actualizarInterfazContactos();
 
 
-    // ==========================================
-    // EVENTO 1: SIMULAR TRANSFERENCIA
-    // ==========================================
+    // ________________________________________________________________
+
+    // Evento 1: Simular transferencia.
+    // ________________________________________________________________
     $('#btn-confirmar-envio').click(function () {
         let nombreBuscar = $('#buscarContacto').val().trim();
         let monto = parseFloat($('#montoEnviar').val());
@@ -134,9 +139,10 @@ $(document).ready(function () {
         $('#buscarContacto').val('');
     });
 
-    // ==========================================
-    // EVENTO 2: AGREGAR NUEVO CONTACTO
-    // ==========================================
+    // ______________________________________________________________
+
+    // Evento 2: Agregar nuevo contacto.
+    // ______________________________________________________________
     $('#btn-guardar-contacto').click(function () {
         let nuevoNombre = $('#nombreContacto').val().trim();
         let nuevaCuenta = $('#cuentaContacto').val().trim();
@@ -148,7 +154,7 @@ $(document).ready(function () {
             return;
         }
 
-        // 1. Añadimos el nuevo objeto al array
+        // 1. Añadimos objeto al array.
         listaContactos.push({
             nombre: nuevoNombre,
             cuenta: nuevaCuenta,
@@ -156,13 +162,13 @@ $(document).ready(function () {
             banco: nuevoBanco
         });
 
-        // 2. Guardamos en el almacenamiento local en formato JSON string
+        // 2. Guardamos en el almacenamiento local en formato JSON string.
         localStorage.setItem(llaveContactos, JSON.stringify(listaContactos));
 
-        // 3. LLAMAMOS A NUESTRA FUNCIÓN para redibujar la lista y actualizar las sugerencias instantáneamente
+        // 3. Llamamos a la función para actualizar lista y sugerencias.
         actualizarInterfazContactos();
 
-        // 4. Limpieza de inputs y cierre del modal
+        // 4. Limpieza de inputs y cierre del modal.
         $('#nombreContacto').val('');
         $('#cuentaContacto').val('');
         if($('#rutContacto').length) $('#rutContacto').val('');
