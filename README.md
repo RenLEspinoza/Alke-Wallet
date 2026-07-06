@@ -16,12 +16,17 @@ Alke-Wallet/
 │   └── styles.css              # Estilos visuales globales de la aplicación.
 │
 ├── js/
-│   └── main.js                 # Lógica de autenticación (Login/Validaciones).
-│  
+│   └── auth.js                 # Memoria en navegador.
+    └── registro.js             # Datos de usuario.
+    └── login.js                # Lógica de autenticación (Login/Validaciones).
+    └── menu.js                 # Saldos.
+    └── sendmoney.js            # Lógica de transferencia.
+    └── deposit.js              # Lógica deposito.
+    └── transactions.js         # Actualización de datos.
 │
-├── index.html                  # Punto de entrada principal (Enrutador)
+├── index.html                  # Punto de entrada principal (Enrutador).
+├── registro.html               # Pantalla de registro. (obligatorio).
 ├── login.html                  # Pantalla de inicio de sesión.
-|
 ├── menu.html                   # Pantalla del menú principal.
 ├── deposit.html                # Pantalla realizar depositos.
 ├── sendmoney.html              # Pantalla para realizar transferencias.
@@ -35,7 +40,7 @@ Alke-Wallet/
 
 El usuario interactúa con la aplicación siguiendo un camino lógico y controlado según su estado de autenticación:
 
-* index.html (Acceso Principal): Pantalla de bienvenida al sitio, el usuario puede interactuar con el sitio en esta etapa sin necesidad de iniciar sesión.
+- index.html (Acceso Principal): Pantalla de bienvenida al sitio, el usuario puede interactuar con el sitio en esta etapa sin necesidad de iniciar sesión.
 
 La barra de navegación dispone de un link a un menu, el cual cumple una funcion de modal en esta etapa, dando las opciones al usuario de iniciar sesión o registrarse
 para poder acceder a los beneficios de la aplicación.
@@ -44,30 +49,30 @@ La barra de navegación tambien dispone de un boton para iniciar sesión directa
 
 En la sección HERO, además de información, cuenta con un llamado a la acción que invita al usuario a iniciar sesión o registrarse.
 
-* login.html (Autenticación): Contiene el formulario de ingreso. Al introducir credenciales válidas, guarda el estado de la sesión y redirige a menu.html.
+- registro.html: Contiene el formulario de registro. Al introducir los datos del usuario nuevo, estos se guardan en el localstorage para ser usados despues.
 
-* menu.html (Panel Principal): Es el centro de la aplicación para usuarios registrados.
-    El usuario puede elegir entre 4 acciones.
-    - Realizar transferencias: El Usuario es redirigido a la pantalla de transferencias "sendmoney.html".
-    - Depositar fondos: El usuario es redirigido a la pantalla para realizar depositos "deposit.html".
-    - Ver ultimos movimientos: El usuario es redirigido a la pantalla que muestra sus ultimos movimientos "transactions.html".
-    - Cerrar sesión: El usuario puede utilizar el boton de la barra de navegación para cerrar su sesión, siendo redirigido al sitio principal "index.html".
+- login.html (Autenticación): Contiene el formulario de ingreso. Al introducir credenciales válidas, guarda el estado de la sesión y redirige a menu.html.
 
-* sendmoney.html: 
-    -El usuario puede interactuar con el formulario para realizar transferencias.
-    -Volver al menú de usuario "menu.html".
-    -Cerrar sesión y ser redirigido al sitio principal "index.html".
+- menu.html (Panel Principal): Es el centro de la aplicación para usuarios registrados (no se puede acceder sin registro).
+  El usuario puede elegir entre 4 acciones.
+  - Realizar transferencias: El Usuario es redirigido a la pantalla de transferencias "sendmoney.html".
+  - Depositar fondos: El usuario es redirigido a la pantalla para realizar depositos "deposit.html".
+  - Ver ultimos movimientos: El usuario es redirigido a la pantalla que muestra sus ultimos movimientos "transactions.html".
+  - Cerrar sesión: El usuario puede utilizar el boton de la barra de navegación para cerrar su sesión, siendo redirigido al sitio principal "index.html".
+
+- sendmoney.html:
+  -El usuario puede interactuar con el formulario para realizar transferencias.
+  -Volver al menú de usuario "menu.html".
+  -Cerrar sesión y ser redirigido al sitio principal "index.html".
 
 deposit.html: El usuario puede interactuar con el formulario para realizar depositos, volver al menú o cerrar sesión y ser redirigido al sitio principal.
 
 transactions.html: El usuario puede visualizar su información de ultimos movimientos, volver al menú o cerrar sesión y ser redirigido al sitio principal.
 
-
-
 ## 📊 3. Diagrama Visual
 
 ```text
-                                   
+
        [ ZONA PÚBLICA ]
       +----------------+
 |-->  |   index.html   | <======================================+
@@ -76,7 +81,7 @@ transactions.html: El usuario puede visualizar su información de ultimos movimi
 |     (Modal)      (Boton)                                      |
 |        |            |                                         |
 |        v            |                                         |
-|<--[Incentivo]       |                                         | 
+|<--[Incentivo]       |                                         |
         |             v                                         |
         |        +------------+                                 |
         ----->   | login.html |                                 |
@@ -114,9 +119,10 @@ HTML5: Estructuración de las pantallas base.
 
 CSS3: Estilos de diseño (por implementar).
 
-JavaScript: Por definir.
+JavaScript: Logica.
 
-jQuery: Por definir.
+jQuery: Interacciones.
 
-Bootstrap: Por definir.
+Bootstrap: Estructura y diseño.
 
+```

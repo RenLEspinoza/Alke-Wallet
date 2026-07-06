@@ -1,90 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Depósito - Alke Wallet</title>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/estilos.css">
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/estilos.css" />
     <script>
-        // Prevenir acceso manual sin login a pantallas criticas.
-        if (!localStorage.getItem('usuarioActual')) {
-            window.location.replace('index.html'); 
-        }
+      // Prevenir acceso manual sin login a pantallas criticas.
+      if (!localStorage.getItem("usuarioActual")) {
+        window.location.replace("index.html");
+      }
     </script>
-</head>
-<body>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">Alke Wallet</a>
 
-   <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">Alke Wallet</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link btn btn-link text-white text-left text-lg-center w-100 mb-3 mb-lg-0"
+                  href="menu.html"
+                  >Menú</a
+                >
+              </li>
+            </ul>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-            
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-link text-white text-left text-lg-center w-100 mb-3 mb-lg-0" href="menu.html">Menú</a>
-                        </li>
-                    </ul>
-
-                    <ul class="navbar-nav ml-auto text-lg-right">
-                        <li class="mt-2 mt-lg-0">
-                            <a id= "btn-logout" class="btn btn-outline-light px-4 w-100 d-lg-inline-block" href="index.html">Cerrar sesión</a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </nav>
+            <ul class="navbar-nav ml-auto text-lg-right">
+              <li class="mt-2 mt-lg-0">
+                <a
+                  id="btn-logout"
+                  class="btn btn-outline-light px-4 w-100 d-lg-inline-block"
+                  href="index.html"
+                  >Cerrar sesión</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main class="container mt-5">
-    <section class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card p-4 shadow-sm">
-          <h2 class="h4 mb-4">Depositar o retirar</h2>
-          <div class="mb-4">
-        <p class="text-muted mb-0">Saldo disponible: <strong id="saldo-disponible" class="text-dark">$---</strong></p>
-    </div>
-          <form>
-            <div class="form-group">
-              <label for="Depositar">Monto:</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                </div>
-                <input id="montoDeposito" type="number" class="form-control"  min="1" placeholder="Monto mínimo $1.000" required>
-              </div>
+      <section class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card p-4 shadow-sm">
+            <h2 class="h4 mb-4">Depositar o retirar</h2>
+            <div class="mb-4">
+              <p class="text-muted mb-0">
+                Saldo disponible:
+                <strong id="saldo-disponible" class="text-dark">$---</strong>
+              </p>
             </div>
-            <div id="mensaje-alerta" class="alert d-none" role="alert"></div>
-            <button id="btn-depositar" type="button" class="btn btn-primary btn-block">Depositar</button>
-            <button id="btn-retirar" type="button" class="btn btn-secondary btn-block">Retirar</button>
-          </form>
+            <form>
+              <div class="form-group">
+                <label for="Depositar">Monto:</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    id="montoDeposito"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    placeholder="Monto mínimo $1.000"
+                    required
+                  />
+                </div>
+              </div>
+              <div id="mensaje-alerta" class="alert d-none" role="alert"></div>
+              <button
+                id="btn-depositar"
+                type="button"
+                class="btn btn-primary btn-block"
+              >
+                Depositar
+              </button>
+              <button
+                id="btn-retirar"
+                type="button"
+                class="btn btn-secondary btn-block"
+              >
+                Retirar
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </main>
 
-        <!-- Footer -->
-    <footer class="bg-dark text-muted py-4 text-center">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 Alke Wallet. Todos los derechos reservados.</p>
-        </div>
+    <!-- Footer -->
+    <footer class="text-muted py-4 text-center">
+      <div class="footer-content">
+        <p class="mb-0">
+          &copy; 2026 Alke Wallet. Todos los derechos reservados.
+        </p>
+      </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.google.com/p/jquery-ui/downloads/detail?name=jquery-ui-1.8.16.custom.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+      integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+      crossorigin="anonymous"
+    ></script>
     <script src="js/deposit.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/auth.js" defer></script>
-    
-</body>
+  </body>
 </html>

@@ -1,77 +1,77 @@
 $(document).ready(function () {
+  // __________________________________________
 
+  // 1. Configuración del usuario.
+  // __________________________________________
+  const correoUsuario = localStorage.getItem("usuarioActual");
+  const llaveSaldo = correoUsuario + "_saldo";
+  const llaveIngresos = correoUsuario + "_ingresos";
 
-    // __________________________________________
+  // __________________________________________
 
-    // 1. Configuración del usuario.
-    // __________________________________________
-    const correoUsuario = localStorage.getItem('usuarioActual'); 
-    const llaveSaldo = correoUsuario + '_saldo';
-    const llaveIngresos = correoUsuario + '_ingresos';
+  // 2. Valores por defecto de saldo e ingresos.
+  // __________________________________________
+  if (!localStorage.getItem(llaveSaldo)) {
+    localStorage.setItem(llaveSaldo, 1250000);
+  }
+  if (!localStorage.getItem(llaveIngresos)) {
+    localStorage.setItem(llaveIngresos, 250000);
+  }
 
-    // __________________________________________
+  // ________________________________________________________
 
-    // 2. Valores por defecto de saldo e ingresos.
-    // __________________________________________
-    if (!localStorage.getItem(llaveSaldo)) {
-        localStorage.setItem(llaveSaldo, 1250000);
+  // 3. Función para mostrar datos del usuario en pantalla.
+  // ________________________________________________________
+
+  function actualizarPantallaMenu() {
+    // Busca el nombre del usuario.
+    const nombreReal =
+      localStorage.getItem(correoUsuario + "_nombre") || "Usuario";
+    $("#nombre-usuario").text(nombreReal);
+
+    // Busca los saldos.
+    let saldoActual = parseFloat(localStorage.getItem(llaveSaldo));
+    let ingresosActuales = parseFloat(localStorage.getItem(llaveIngresos));
+
+    // Modifica la información en el html.
+    $("#saldo-disponible").text("$" + saldoActual.toLocaleString("es-CL"));
+    $("#ingresos-mes").text("+$" + ingresosActuales.toLocaleString("es-CL"));
+  }
+
+  // Ejecutamos en el milisegundo 0 para evitar parpadeos.
+  actualizarPantallaMenu();
+
+  // ________________________________________________________
+
+  // 4. Escuchar movimientos de saldo en otras pantallas.
+  // ________________________________________________________
+
+  // Si el usuario transfiere en "sendmoney.html" o deposita en "deposit.html" y vuelve al menú,
+  // este evento actualiza el saldo de fondo automáticamente.
+  window.addEventListener("storage", function (e) {
+    if (e.key === llaveSaldo) {
+      actualizarPantallaMenu();
     }
-    if (!localStorage.getItem(llaveIngresos)) {
-        localStorage.setItem(llaveIngresos, 250000); 
-    }
-
-    // ________________________________________________________
-
-    // 3. Función para mostrar datos del usuario en pantalla.
-    // ________________________________________________________
-
-    function actualizarPantallaMenu() {
-        // Busca el nombre del usuario.
-        const nombreReal = localStorage.getItem(correoUsuario + '_nombre') || 'Usuario';
-        $('#nombre-usuario').text(nombreReal);
-
-        // Busca los saldos.
-        let saldoActual = parseFloat(localStorage.getItem(llaveSaldo));
-        let ingresosActuales = parseFloat(localStorage.getItem(llaveIngresos));
-
-        // Modifica la información en el html.
-        $('#saldo-disponible').text('$' + saldoActual.toLocaleString('es-CL'));
-        $('#ingresos-mes').text('+$' + ingresosActuales.toLocaleString('es-CL'));
-    }
-
-    // Ejecutamos en el milisegundo 0 para evitar parpadeos
-    actualizarPantallaMenu();
-
-    // ________________________________________________________
-
-    // 4. Escuchar movimientos de saldo en otras pantallas.
-    // ________________________________________________________
-
-    // Si el usuario transfiere en "sendmoney.html" o deposita en "deposit.html" y vuelve al menú, 
-    // este evento actualiza el saldo de fondo automáticamente.
-    window.addEventListener('storage', function (e) {
-        if (e.key === llaveSaldo) {
-            actualizarPantallaMenu();
-        }
-    });
+  });
 });
 
 $(document).ready(function () {
-    // 1. Buscamos el historial de movimientos que ya creamos en las otras pantallas
-    let historial = JSON.parse(localStorage.getItem('historial_movimientos')) || [];
+  // 1. Buscamos el historial de movimientos que ya creamos en las otras pantallas.
+  let historial =
+    JSON.parse(localStorage.getItem("historial_movimientos")) || [];
 
-    // 2. Creamos una variable para acumular la suma de los egresos
-    let sumaEgresos = 0;
+  // 2. Creamos una variable para acumular la suma de los egresos.
+  let sumaEgresos = 0;
 
-    // 3. Recorremos la lista de movimientos uno por uno
-    historial.forEach(function (movimiento) {
-        // Si el tipo es 'Envío' o es 'Retiro', significa que es un egreso (gasto)
-        if (movimiento.tipo === 'Envío' || movimiento.tipo === 'Retiro') {
-            // Sumamos el valor numérico del monto
-            sumaEgresos = sumaEgresos + parseFloat(movimiento.monto);
-        }
-    });
+  // 3. Recorremos la lista de movimientos uno por uno.
+  historial.forEach(function (movimiento) {
+    // Si el tipo es 'Envío' o es 'Retiro', significa que es un egreso (gasto).
+    if (movimiento.tipo === "Envío" || movimiento.tipo === "Retiro") {
+      // Sumamos el valor numérico del monto.
+      sumaEgresos = sumaEgresos + parseFloat(movimiento.monto);
+    }
+  });
 
-    // 4. Con jQuery inyectamos el total calculado en la tarjeta roja formateado como moneda
-    $('#egresos-totales').text(`-$${sumaEgresos.toLocaleString('es-CL')}`);
+  // 4. Inyectamos el total calculado en la tarjeta roja formateado como moneda.
+  $("#egresos-totales").text(`-$${sumaEgresos.toLocaleString("es-CL")}`);
 });

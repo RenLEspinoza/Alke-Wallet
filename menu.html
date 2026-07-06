@@ -1,139 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"><title>Menu - Alke Wallet</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link class="rtl" rel="stylesheet" href="css/estilos.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+    <title>Menu - Alke Wallet</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <link class="rtl" rel="stylesheet" href="css/estilos.css" />
     <script>
-        // Prevenir acceso manual sin login a pantallas criticas.
-        if (!localStorage.getItem('usuarioActual')) {
-            window.location.replace('index.html'); 
-        }
+      // Prevenir acceso manual sin login a pantallas criticas.
+      if (!localStorage.getItem("usuarioActual")) {
+        window.location.replace("index.html");
+      }
     </script>
-</head>
-<body>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/index.html">Alke Wallet</a>
 
-   <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="/index.html">Alke Wallet</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto text-lg-right">
-                        <li class="mt-2 mt-lg-0">
-                            <a id= "btn-logout" class="btn btn-outline-light px-4 w-100 d-lg-inline-block" href="index.html">Cerrar sesión</a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </nav>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto text-lg-right">
+              <li class="mt-2 mt-lg-0">
+                <a
+                  id="btn-logout"
+                  class="btn btn-outline-light px-4 w-100 d-lg-inline-block"
+                  href="index.html"
+                  >Cerrar sesión</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
-
     <main class="container mt-5">
-    
-    <!-- Mensaje de bienvenida -->
-   <div class="container mt-2">
+      <!-- Mensaje de bienvenida -->
+      <div class="container mt-2">
         <div class="jumbotron bg-light shadow-sm text-center">
-            <h1 class="display-4">¡Bienvenido, <span id="nombre-usuario" class="text-primary font-weight-bold">Cargando...</span>!</h1>
-            <p class="lead">Esta es tu billetera digital Alke Wallet.</p>
+          <h1 class="display-4">
+            ¡Bienvenido,
+            <span id="nombre-usuario" class="text-primary font-weight-bold"
+              >Cargando...</span
+            >!
+          </h1>
+          <p class="lead">Esta es tu billetera digital Alke Wallet.</p>
         </div>
-    </div>
-
-    <!-- Sección de Tarjetas de Resumen Financiero -->
-    <section aria-label="Resumen Financiero">
-      <div class="row">
-        
-        <!-- Tarjeta 1: Saldo Total (Destacada) -->
-        <div class="col-md-4 mb-4">
-          <div class="card bg-primary text-white h-100 shadow-sm">
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div>
-                <h2 class="card-title h6 text-uppercase text-white-50">Saldo Disponible</h2>
-                <p id="saldo-disponible" class="display-4 font-weight-bold mb-0">$---</p>
-              </div>
-              <small class="text-white-50 mt-3">Cuenta Corriente N° ****4321</small>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tarjeta 2: Ingresos del mes -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow-sm border-left border-success" style="border-left-width: 5px !important;">
-            <div class="card-body">
-              <h2 class="card-title h6 text-uppercase text-muted">Ingresos (Junio)</h2>
-              <p id="ingresos-mes" class="h2 text-success font-weight-bold mb-1">+$250,000</p>
-              <p class="card-text small text-muted">Último depósito: Ayer 18:30</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tarjeta 3: Egresos del mes -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow-sm border-left border-danger" style="border-left-width: 5px !important;">
-            <div class="card-body">
-              <h2 class="card-title h6 text-uppercase text-muted">Egresos (Junio)</h2>
-              <p id="egresos-totales" class="h2 text-danger font-weight-bold mb-1">-$750,000</p>
-              <p class="card-text small text-muted">Último gasto: Hace 2 horas</p>
-            </div>
-          </div>
-        </div>
-
       </div>
-    </section>
 
-    <!-- Sección Accesos Rápidos (Botones y Enlaces de Navegación) -->
-    <section class="mt-4" aria-label="Acciones Rápidas">
-      <div class="card p-4 shadow-sm bg-white">
-        <h3 class="h5 mb-3">¿Qué deseas hacer hoy?</h3>
+      <!-- Sección de Tarjetas de Resumen Financiero -->
+      <section aria-label="Resumen Financiero">
         <div class="row">
-          
-          <div class="col-sm-6 col-md-4 mb-2">
-            <!-- Enlaces tipo botón -->
-            <a href="sendmoney.html" class="btn btn-outline-success btn-block py-3 font-weight-bold">
-              Realizar transferencia
-            </a>
-          </div>
-          
-          <div class="col-sm-6 col-md-4 mb-2">
-            <a href="deposit.html" class="btn btn-outline-primary btn-block py-3 font-weight-bold">
-              Depositar o retirar fondos
-            </a>
-          </div>
-
-          <div class="col-sm-6 col-md-4 mb-2">
-            <a href="transactions.html" class="btn btn-outline-secondary btn-block py-3 font-weight-bold">
-              Ver ultimos movimientos
-            </a>
+          <!-- Tarjeta 1: Saldo Total (Destacada) -->
+          <div class="col-md-4 mb-4">
+            <div class="card text-white h-100 shadow-sm">
+              <div class="tarjeta-saldo">
+                <p class="text-white-50 mb-1">SALDO DISPONIBLE</p>
+                <h2 id="saldo-disponible">$1.000.000</h2>
+                <small class="text-white-50"
+                  >Cuenta Corriente N° ****4321</small
+                >
+              </div>
+            </div>
           </div>
 
+          <!-- Tarjeta 2: Ingresos del mes -->
+          <div class="col-md-4 mb-4">
+            <div
+              class="card h-100 shadow-sm border-left border-success"
+              style="border-left-width: 5px !important"
+            >
+              <div class="card-body">
+                <h2 class="card-title h6 text-uppercase text-muted">
+                  Ingresos (Junio)
+                </h2>
+                <p
+                  id="ingresos-mes"
+                  class="h2 text-success font-weight-bold mb-1"
+                >
+                  +$250,000
+                </p>
+                <p class="card-text small text-muted">
+                  Último depósito: Ayer 18:30
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 3: Egresos del mes -->
+          <div class="col-md-4 mb-4">
+            <div
+              class="card h-100 shadow-sm border-left border-danger"
+              style="border-left-width: 5px !important"
+            >
+              <div class="card-body">
+                <h2 class="card-title h6 text-uppercase text-muted">
+                  Egresos (Junio)
+                </h2>
+                <p
+                  id="egresos-totales"
+                  class="h2 text-danger font-weight-bold mb-1"
+                >
+                  -$750,000
+                </p>
+                <p class="card-text small text-muted">
+                  Último gasto: Hace 2 horas
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-  </main>
+      <!-- Sección Accesos Rápidos (Botones y Enlaces de Navegación) -->
+      <section class="mt-4" aria-label="Acciones Rápidas">
+        <div class="card p-4 shadow-sm bg-white">
+          <h3 class="h5 mb-3">¿Qué deseas hacer hoy?</h3>
+          <div class="row">
+            <div class="col-sm-6 col-md-4 mb-2">
+              <!-- Enlaces tipo botón -->
+              <a href="sendmoney.html" class="btn btn-primary btn-block py-3">
+                Realizar transferencia
+              </a>
+            </div>
 
-  
+            <div class="col-sm-6 col-md-4 mb-2">
+              <a
+                href="deposit.html"
+                class="btn btn-wallet-matte btn-block py-3"
+              >
+                Depositar o retirar fondos
+              </a>
+            </div>
+
+            <div class="col-sm-6 col-md-4 mb-2">
+              <a
+                href="transactions.html"
+                class="btn btn-wallet-matte btn-block py-3"
+              >
+                Ver ultimos movimientos
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
     <!-- Footer -->
-    <footer class="bg-dark text-muted py-4 text-center">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 Alke Wallet. Todos los derechos reservados.</p>
-        </div>
+    <footer class="text-muted py-4 text-center">
+      <div class="footer-content">
+        <p class="mb-0">
+          &copy; 2026 Alke Wallet. Todos los derechos reservados.
+        </p>
+      </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.google.com/p/jquery-ui/downloads/detail?name=jquery-ui-1.8.16.custom.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+      integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+      crossorigin="anonymous"
+    ></script>
     <script src="js/menu.js" defer></script>
     <script src="js/auth.js" defer></script>
-    
-</body>
+  </body>
 </html>

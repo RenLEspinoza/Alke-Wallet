@@ -1,27 +1,507 @@
-/* 1. Nos aseguramos de que el HTML y el Body ocupen toda la altura disponible */
-html, body {
-    margin: 0;
-    padding: 0;
+/* ==========================================================================
+   1. VARIABLES Y ESTILOS GLOBALES
+   ========================================================================== */
+
+/* Importamos una tipografía moderna y redonda desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Paleta Principal (Inspirada en tu referencia) */
+    --morado-principal: #6c3ce9;
+    --morado-secundario: #a37eff;
+    --degradado-wallet: linear-gradient(135deg, #6c3ce9 0%, #4a24b1 100%);
+    
+    /* Negro Matte y Fondos */
+    --negro-matte: #1a1a24;
+    --negro-matte-suave: #262636;
+    --fondo-app: #f4f5fa; /* Un gris/azul muy limpio para que resalten las tarjetas */
+    --blanco-tarjeta: #ffffff;
+    
+    /* Estados y Botones Success */
+    --verde-success: #20c997; /* Verde esmeralda vivo que contrasta perfecto con el morado */
+    --verde-success-hover: #1aa179;
+    --rojo-danger: #ff5b5b;
+    
+    /* Tipografía */
+    --fuente-principal: 'Plus Jakarta Sans', sans-serif;
+}
+
+.text-primary {
+    color: var(--morado-principal) !important;
+}
+
+.descarga {
+    background-color: var(--morado-principal) !important;
+}
+.descarga h2 {
+    color: #ffffff !important;
+}
+.btn-primary {
+  background-color: var(--morado-principal) !important;
+  border-color: var(--morado-secundario) !important;
+  color: #ffffff !important;
+}
+
+
+.btn-secondary {
+  background-color: var(--negro-matte) !important;
+  border-color: var(--negro-matte-suave) !important;
+  color: #ffffff !important;
+}
+
+
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active {
+  background-color: var(--negro-matte) !important;
+  border-color: var(--negro-matte-suave) !important;
+}
+
+/* ==========================================================================
+   2. CONTENEDORES Y TARJETAS (CARDS)
+   ========================================================================== */
+
+/* 1. La tarjeta principal de Saldo Disponible (Morado Degradado como tu referencia) */
+.tarjeta-saldo {
+    background: var(--degradado-wallet);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 24px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(108, 60, 233, 0.25); /* Sombra morada sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-saldo h1, .tarjeta-saldo h2, .tarjeta-saldo h3, .tarjeta-saldo p {
+    color: #ffffff !important; /* Forzamos a que todo dentro sea blanco */
+}
+
+/* 2. Las tarjetas blancas del Menú, Formularios y Movimientos */
+.card, .tarjeta-blanca {
+    background-color: var(--blanco-tarjeta);
+    border: none !important; /* Eliminamos el borde gris aburrido de Bootstrap */
+    border-radius: 20px !important; /* Bordes suaves */
+    padding: 1.5rem;
+    /* Sombra profesional: muy difuminada y poco opaca */
+    box-shadow: 0 8px 24px rgba(26, 26, 36, 0.04), 0 1px 2px rgba(26, 26, 36, 0.02) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 3. El contenedor o sección principal donde envuelves tus vistas */
+.contenedor-principal {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* ==========================================================================
+   3. INTERACCIONES EN TARJETAS (Efecto Hover suave)
+   ========================================================================== */
+
+/* Cuando pasas el mouse por encima de una tarjeta, se eleva sutilmente */
+.card:hover, .tarjeta-saldo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(26, 26, 36, 0.08) !important;
+}
+
+/* Ajuste específico para el hover de la tarjeta morada */
+.tarjeta-saldo:hover {
+    box-shadow: 0 16px 36px rgba(108, 60, 233, 0.35) !important;
+}
+
+/* Aplicamos las reglas generales al cuerpo de la aplicación */
+body {
+    background-color: var(--fondo-app);
+    font-family: var(--fuente-principal);
+    color: var(--negro-matte);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ajustes globales de títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--morado-principal);
+    letter-spacing: -0.5px; /* Hace que los títulos se vean más premium, como en la app móvil */
+}
+
+/* Reset sutil para que los textos pequeños se vean limpios */
+.text-muted {
+    color: #8a8aa8 !important;
+}
+
+
+/* ==========================================================================
+   4. TABLAS, FORMULARIOS Y COMPONENTES (Negro Matte & Verde Success)
+   ========================================================================== */
+
+/* Ajuste definitivo para que la tarjeta morada pise todo color previo */
+.tarjeta-saldo {
+    background: var(--degradado-wallet) !important;
+    border: none !important;
+}
+
+/* --- TABLA DE MOVIMIENTOS (Estilo Matte Premium) --- */
+.table {
+    color: var(--negro-matte);
+}
+
+/* El encabezado de la tabla pasa a ser Negro Matte */
+.table .thead-dark th {
+    background-color: var(--negro-matte) !important;
+    border-color: var(--negro-matte) !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 1rem 1.5rem;
+}
+
+.table td {
+    padding: 1.2rem 1.5rem;
+    vertical-align: middle !important;
+    border-top: 1px solid #eaecf0;
+}
+
+/* Efecto hover en las filas de la tabla */
+.table-hover tbody tr:hover {
+    background-color: rgba(108, 60, 233, 0.03) !important; /* Un sutil tinte morado */
+    transition: background-color 0.2s ease;
+}
+
+/* --- BADGES (Etiquetas de tipo de transacción) --- */
+.badge {
+    padding: 0.5em 1em !important;
+    border-radius: 20px !important; /* Estilo píldora como tu referencia */
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+}
+
+.badge-success {
+    background-color: rgba(32, 201, 151, 0.15) !important; /* Fondo verde translúcido */
+    color: var(--verde-success) !important;
+}
+
+.badge-danger {
+    background-color: rgba(255, 91, 91, 0.15) !important; /* Fondo rojo translúcido */
+    color: var(--rojo-danger) !important;
+}
+
+/* --- BOTONES PERSONALIZADOS COMBINADOS CON BOOTSTRAP 4 --- */
+/* Botón Verde Success */
+.btn-wallet-success {
+    background-color: var(--verde-success) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(32, 201, 151, 0.2);
+}
+
+.btn-wallet-success:hover {
+    background-color: var(--verde-success-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(32, 201, 151, 0.3);
+}
+
+/* Botón Negro Matte (Ideal para acciones secundarias o Menú) */
+.btn-wallet-matte {
+    background-color: var(--negro-matte) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease !important;
+}
+
+.btn-wallet-matte:hover {
+    background-color: var(--negro-matte-suave) !important;
+    transform: translateY(-2px);
+}
+
+/* Inputs de los formularios */
+.form-control {
+    border-radius: 12px !important;
+    border: 1.5px solid #eaecf0;
+    padding: 0.75rem 1rem;
+    height: auto !important;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--morado-secundario) !important;
+    box-shadow: 0 0 0 4px rgba(163, 126, 255, 0.15) !important;
+}
+
+/* ==========================================================================
+   5. FORMATEAR COMPONENTES CRÍTICOS (Formularios y Tablas)
+   ========================================================================== */
+
+/* Estilo para las etiquetas de los formularios (Labels) */
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--negro-matte);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.1px;
+}
+
+/* Rediseño completo de los Inputs y Selects */
+.form-control {
+    border-radius: 14px !important; /* Esquinas curvas como la app móvil */
+    border: 2px solid #eef0f6 !important; /* Borde sutil y limpio */
+    padding: 0.8rem 1.2rem !important;
+    height: auto !important; /* Permite que el padding actúe bien en Bootstrap 4 */
+    font-size: 1rem;
+    color: var(--negro-matte) !important;
+    background-color: #ffffff !important;
+    transition: all 0.25s ease-in-out !important;
+}
+
+/* Interacción cuando el usuario hace clic para escribir (:focus) */
+.form-control:focus {
+    border-color: var(--morado-secundario) !important; /* Cambia a morado claro */
+    box-shadow: 0 0 0 4px rgba(108, 60, 233, 0.12) !important; /* Brillo morado suave en los bordes */
+    background-color: #ffffff !important;
+}
+
+/* Estilo para los placeholders (el texto de ayuda gris dentro del input) */
+.form-control::placeholder {
+    color: #a0a0c0 !important;
+    font-size: 0.95rem;
+}
+
+
+/* --- TABLA DE MOVIMIENTOS --- */
+
+/* Contenedor de la tabla para asegurar esquinas redondeadas */
+.table-responsive {
+    border-radius: 16px;
+    overflow: hidden; /* Evita que las esquinas de la tabla se salgan del borde */
+    border: 1px solid #eef0f6;
+}
+
+.table {
+    margin-bottom: 0 !important; /* Elimina márgenes innecesarios */
+}
+
+/* El encabezado (thead) pasa a ser Negro Matte con letras premium */
+.table .thead-dark th {
+    background-color: var(--negro-matte) !important;
+    border-color: var(--negro-matte) !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 1.1rem 1.5rem;
+}
+
+/* Las filas de la tabla (Celdas) */
+.table td {
+    padding: 1.3rem 1.5rem !important;
+    border-top: 1px solid #f1f2f7 !important;
+    font-size: 0.95rem;
+}
+
+/* Efecto hover suave al pasar el mouse sobre una fila de transacción */
+.table-hover tbody tr:hover {
+    background-color: rgba(108, 60, 233, 0.03) !important; /* Deja un sutil tinte morado de fondo */
+    cursor: pointer;
+}
+
+
+/* --- ETIQUETAS REESTILIZADAS (Badges de Envíos, Depósitos, Retiros) --- */
+.badge {
+    padding: 0.6em 1.2em !important;
+    border-radius: 20px !important; /* Forma de píldora idéntica a tu referencia */
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.2px;
+}
+
+/* Verde traslúcido para depósitos (Éxito) */
+.badge-success {
+    background-color: rgba(32, 201, 151, 0.12) !important; 
+    color: var(--verde-success) !important;
+}
+
+/* Rojo traslúcido para envíos y retiros (Peligro/Gasto) */
+.badge-danger {
+    background-color: rgba(255, 91, 91, 0.12) !important;
+    color: var(--rojo-danger) !important;
+}
+
+/* ==========================================================================
+   6. CORRECCIÓN DEFINITIVA PARA TABLA MÓVIL (Ver Saldo y Detalle)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Aseguramos que el contenedor realmente permita desplazar la tabla */
+    .table-responsive {
+        overflow-x: auto !important;
+        display: block;
+        width: 100%;
+        -webkit-overflow-scrolling: touch; /* Scroll ultra suave en iPhones */
+        border: none !important; /* Limpiamos bordes internos */
+    }
+
+    /* 2. Achicamos ligeramente la tipografía y paddings solo en el celular para ganar espacio */
+    .table td, .table th {
+        padding: 0.9rem 0.8rem !important; /* Más compacto para que quepa más info */
+        font-size: 0.85rem !important;
+    }
+
+    /* 3. Ajustamos los anchos mínimos para que el Monto y el Detalle tengan prioridad */
+    .table th:nth-child(1), .table td:nth-child(1) {
+        min-width: 90px !important; /* Fecha junta pero compacta */
+    }
+
+    .table th:nth-child(2), .table td:nth-child(2) {
+        min-width: 85px !important;  /* El badge justo */
+    }
+
+    .table th:nth-child(3), .table td:nth-child(3) {
+        min-width: 140px !important; /* Detalle visible */
+        white-space: normal !important; /* Permitimos que si el nombre es largo, use 2 líneas en vez de cortarse */
+    }
+
+    .table th:nth-child(4), .table td:nth-child(4) {
+        min-width: 95px !important;  /* Espacio garantizado para el saldo de la fila */
+        text-align: right !important; /* Alineado a la derecha como las apps de banco */
+        font-weight: 700 !important;
+    }
+
+    /* 4. TRUCO PREMIUM: Hacemos visible una barra de scroll sutil para que el usuario sepa que hay más info */
+    .table-responsive::-webkit-scrollbar {
+        height: 5px; /* Barra delgadita abajo de la tabla */
+    }
+    
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: rgba(108, 60, 233, 0.2); /* Color morado translúcido */
+        border-radius: 10px;
+    }
+}
+
+/* ==========================================================================
+   7. CONFIGURACIÓN ESTRUCTURAL (Sticky Footer Robusto)
+   ========================================================================== */
+html {
     height: 100%;
 }
 
-/* 2. Convertimos el body en un contenedor Flexbox vertical */
 body {
-    display: flex;
-    flex-direction: column;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 75px; /* IMPORTANTE: Debe ser igual o ligeramente mayor al alto real del footer */
+    background-color: var(--background);
 }
 
-/* 3. El truco mágico: obligamos al contenido principal a expandirse */
-.contenido-principal {
-    flex: 1; 
-    /* Esto hace que 'main' tome todo el espacio vacío restante, 
-       empujando al footer inevitablemente al fondo. */
+main, .main-content {
+    display: block;
+    width: 100%;
 }
 
-/* 4. Estilos opcionales para tu footer */
+/* ==========================================================================
+   8. FOOTER MINIMALISTA
+   ========================================================================== */
 footer {
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+     background-color: var(--negro-matte) !important;
+    display: block;
 }
+
+.footer-content {
+    padding: 1.5rem 1rem; 
+    text-align: center;
+    color: #64748B;
+    font-size: 0.875rem;
+    
+    display: block; 
+}
+
+/* ==========================================================================
+   9. HERO SECTION AJUSTES
+   ========================================================================== */
+
+.hero-section {
+  width: 100%;
+  min-height: 80vh;
+  
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.6) 30%, rgba(0,0,0,0) 70%), url('/assets/hero-image.png'); 
+  background-repeat: no-repeat;
+  
+  background-position: right center; 
+  
+  background-size: cover; 
+  
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Color de fondo por si la imagen tarda en cargar */
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 1200px; /* Limita el ancho del contenido en pantallas gigantes */
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero-content {
+  /* Limitamos el ancho del texto al 45% o 50% para obligarlo 
+     a quedarse en el lado izquierdo (tu espacio muerto) */
+  max-width: 50%; 
+}
+
+/* Estilos rápidos para el texto */
+.hero-content h1 {
+  font-size: 3rem;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  background-color: #6200ee; /* El morado de tu app */
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+  .hero-section {
+    background-position: center bottom; /* Envía el foco de la imagen abajo */
+    align-items: flex-start; /* Sube el texto */
+    padding-top: 4rem;
+  }
+  .hero-content {
+    max-width: 100%; /* El texto toma todo el ancho en móviles */
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   10. AJUSTES COLOR NAVBAR
+   ========================================================================== */
+
+   .navbar {
+     background-color: var(--negro-matte) !important;
+   }
+
+
